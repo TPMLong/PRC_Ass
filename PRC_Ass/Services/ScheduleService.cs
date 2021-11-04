@@ -38,7 +38,7 @@ namespace PRC_Ass.Services
                     var diw = timeStore.DayOfWeek;
                     if (diw.ToString().Contains("Saturday"))
                     {
-                        string scheduleId = courseId + timeStore.ToString() + shiftId;
+                        string scheduleId = courseId + "" + shiftId + "" + time.Day + "/" + time.Month + "/" + time.Year + "" + "slot" + i;
                         Schedule sche = new Schedule
                         {
                             ItemId = scheduleId,

@@ -12,6 +12,7 @@ namespace PRC_Ass.Services
     public partial interface ICourseService : IBaseService<Courses>
     {
         Task<List<Courses>> GetAllCourse();
+        Task<Courses> SearchCourseByName(string name);
     }
     public partial class CourseService : BaseServices<Courses>, ICourseService
     {
@@ -22,6 +23,52 @@ namespace PRC_Ass.Services
         {
             var listCourse = await Get().ToListAsync();
             return listCourse;
+        }
+
+        public async Task<Courses> SearchCourseByName(string name)
+        {
+            var course = await Get(x => x.CourseName == name).FirstOrDefaultAsync();
+            return course;
+        }
+
+        public async Task<Courses> CreateCourse(Courses course)
+        {
+            await CreateAsyn(course);
+            return course;
+        }
+
+        public async Task<Courses> UpdateCourse(Courses course)
+        {
+            var acc = await Get(x => x.CourseId == course.CourseId).FirstOrDefaultAsync();
+            if (acc != null)
+            {
+                if (course.CourseName != null)
+                {
+                    acc.CourseName = course.CourseName;
+                }
+                await UpdateAsync(acc);
+                return acc;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Courses> DeleteAccount(string id)
+        {
+            var acc = await Get(x => x.CourseId == id).FirstOrDefaultAsync();
+            if (acc != null)
+            {
+                await DeleteAsync(acc);
+                //acc. = false;
+                //await UpdateAsync(acc);
+                return acc;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
