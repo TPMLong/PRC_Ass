@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Microsoft.Extensions.Options;
 using PRC_Ass.Models;
 using PRC_Ass.Repositories;
 using PRC_Ass.Services.Base;
@@ -9,13 +12,17 @@ using System.Threading.Tasks;
 
 namespace PRC_Ass.Services
 {
-    public partial interface IAttendanceService : IBaseService<Attendances>
+    public partial interface IAttendanceService : IBaseService<Attendance>
     {
-        Task<List<Attendances>> CreateAttendance(string courseId, int studentId, string shiftId);
-        Task<Boolean> UpdateAttendance(int studentId, string scheduleId);
+/*        Task<List<Attendances>> CreateAttendance(string courseId, int studentId, string shiftId);
+        Task<Boolean> UpdateAttendance(int studentId, string scheduleId);*/
+    
+    
+    
     }
-    public partial class AttendanceService : BaseServices<Attendances>, IAttendanceService
+    public partial class AttendanceService: BaseServices<Attendance>, IAttendanceService
     {
+        /*
         private readonly IScheduleRepository _scheduleRepository;
         public AttendanceService(IAttendanceRepository repository, IScheduleRepository scheduleRepository) : base(repository)
         {
@@ -50,6 +57,18 @@ namespace PRC_Ass.Services
                 return true;
             }
             return false;
+        }*/
+
+        public void CheckAttendance(Attendance attendance)
+        {
+            var option = Options.Create(new RedisCacheOptions()
+            {
+                Configuration = "127.0.0.1:6379"
+            });
+            IDistributedCache cache = new RedisCache(option);
+
+            //cache.SetString("rat", "bob");
         }
+
     }
 }

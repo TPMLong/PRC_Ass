@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace PRC_Ass.Repositories
 {
-    public partial interface IScheduleRepository : IBaseRepository<Schedule>
+    public partial interface ICheckFingerRepository : IBaseRepository<CheckFinger>
     {
     }
-    public partial class ScheduleRepository : BaseRepository<Schedule>, IScheduleRepository
+    public partial class CheckFingerRepository : BaseRepository<CheckFinger>, ICheckFingerRepository
     {
-        public ScheduleRepository(DbContext dbContext) : base(dbContext)
+        public CheckFingerRepository(DbContext dbContext) : base(dbContext)
         {
+
         }
     }
 }

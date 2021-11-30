@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PRC_Ass.Repositories
 {
-    public partial interface IAttendanceRepository : IBaseRepository<Attendances>
+    public partial interface IAttendanceRepository : IBaseRepository<Attendance>
     {
     }
-    public partial class AttendanceRepository : BaseRepository<Attendances>, IAttendanceRepository
+    public partial class AttendanceRepository : BaseRepository<Attendance>, IAttendanceRepository
     {
         public AttendanceRepository(DbContext dbContext) : base(dbContext)
         {
-            
+
         }
     }
 }

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 using PRC_Ass.Repositories;
 using PRC_Ass.Services;
+using PRC_Ass.Models;
 
 namespace PRC_Ass
 {
@@ -31,19 +32,11 @@ namespace PRC_Ass
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DBContext>(op => op.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            /*            services.AddScoped<ISavingAccountRepository<SavingAccount>, SavingAccountRepository>();
-                        services.AddScoped<ITransactionRepository<Transaction>, TransactionRepository>();*/
             services.AddScoped<DbContext, DBContext>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<ICourseRepository, CourseRepository>();
-            services.AddScoped<IScheduleService, ScheduleService>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
-            services.AddScoped<IShiftService, ShiftService>();
-            services.AddScoped<IShiftRepository, ShiftRepository>();
             services.AddScoped<IAttendanceService, AttendanceService>();
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
+            services.AddScoped<ICheckFingerService, CheckFingerService>();
+            services.AddScoped<ICheckFingerRepository, CheckFingerRepository>();
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -55,6 +48,10 @@ namespace PRC_Ass
                     Title = "PRC API",
                     Version = "v1",
                 });
+            });
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
             });
         }
 

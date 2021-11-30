@@ -13,11 +13,10 @@ namespace PRC_Ass.Data
        {
             Database.Migrate();
        }
-        public DbSet<Accounts> Accounts { get; set; }
-        public DbSet<Attendances> Attendances { get; set; }
-        public DbSet<Courses> Courses { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<Shifts> Shifts { get; set; }
+        public DbSet<Attendance> Attendance { get; set; }
+        public DbSet<CheckFinger> CheckFinger { get; set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Employee> Employee { get; set; }
 
     }
 }
